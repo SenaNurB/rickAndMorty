@@ -1,10 +1,26 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchCharacters } from "../services/api";
 
 const HomeScreen = () => {
+  useEffect(() => {
+    async function getCharacters() {
+      try {
+        const data = await fetchCharacters();
+        console.log("====================================");
+        console.log(data);
+        console.log("====================================");
+      } catch (error) {
+        setError(error.message);
+      }
+    }
+    getCharacters();
+  }, []);
+
   return (
     <View>
-      <Text>HomeScreen</Text>
+      {/* searchBox */}
+      {/* resultList */}
     </View>
   );
 };
