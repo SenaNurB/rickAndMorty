@@ -5,6 +5,8 @@ import ResultList from "./ResultList";
 import { useCharacterQuery } from "../../hooks/useCharacterQuery";
 import { useCharacterStore } from "../../stores/characterStore";
 import LoadingOverlay from "../ui/LoadingOverlay";
+import ErrorOverlay from "../ui/ErrorOverlay";
+import { horizontalScale } from "../../constants/scaling";
 
 const SearchBox = () => {
   const [searchText, setSearchText] = useState();
@@ -35,15 +37,19 @@ const SearchBox = () => {
 
     if (error) {
       return (
-        <Text style={styles.errorText}>
-          {error.message === "No Character Found"
-            ? "No Character Found"
-            : "Error loading data"}
-        </Text>
+        <ErrorOverlay
+          message={
+            error.message === "No Character Found"
+              ? "No Character Found"
+              : "Error loading data"
+          }
+        />
       );
     }
 
-    return data?.length ? <ResultList data={data} /> : null;
+    return data?.length ? (
+      <ResultList data={data} searchText={searchText} />
+    ) : null;
   };
 
   return (
@@ -63,24 +69,10 @@ export default SearchBox;
 
 const styles = StyleSheet.create({
   container: {
-    marginHorizontal: 20,
-    paddingBottom: 50,
+    marginHorizontal: horizontalScale(20),
     zIndex: 1,
   },
   resultContainer: {
     flex: 1,
-  },
-  loadingText: {
-    textAlign: "center",
-    marginTop: 20,
-  },
-  errorText: {
-    color: "red",
-    textAlign: "center",
-    marginTop: 20,
-  },
-  noCharacterText: {
-    textAlign: "center",
-    marginTop: 20,
   },
 });

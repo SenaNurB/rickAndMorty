@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import SelectedItem from "./SelectedItem";
 import { useCharacterStore } from "../../stores/characterStore";
 import IconButton from "../ui/IconButton";
+import { horizontalScale, verticalScale } from "../../constants/scaling";
 
 const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
   const { removeCharacter } = useCharacterStore();
@@ -50,11 +51,12 @@ const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         ListFooterComponent={input}
+        showsHorizontalScrollIndicator={false}
       />
       <IconButton
-        name="chevron-down"
+        name="caret-down-outline"
         size={20}
-        color="lightgray"
+        color="#475569"
         onPress={onPress}
       />
     </View>
@@ -67,9 +69,21 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderWidth: 1,
-    padding: 5,
-    borderRadius: 6,
+    borderColor: "#9aa8bc",
+    padding: horizontalScale(5),
+    borderRadius: horizontalScale(10),
     justifyContent: "center",
     alignItems: "center",
+    marginBottom: verticalScale(5),
+    backgroundColor: "white",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+
+    elevation: 5,
   },
 });

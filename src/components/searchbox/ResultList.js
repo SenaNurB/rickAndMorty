@@ -1,11 +1,12 @@
 import { FlatList, StyleSheet, View } from "react-native";
 import React, { useCallback } from "react";
 import ResultItem from "./ResultItem";
+import { horizontalScale, verticalScale } from "../../constants/scaling";
 
-const ResultList = ({ data }) => {
+const ResultList = ({ data, searchText }) => {
   const renderItem = useCallback(
     ({ item }) => {
-      return <ResultItem item={item} />;
+      return <ResultItem item={item} searchText={searchText} />;
     },
     [data]
   );
@@ -19,6 +20,8 @@ const ResultList = ({ data }) => {
     []
   );
 
+  const MySeparator = () => <View style={styles.separator} />;
+
   return (
     <View style={styles.itemsContainer}>
       <FlatList
@@ -30,6 +33,8 @@ const ResultList = ({ data }) => {
         maxToRenderPerBatch={5}
         updateCellsBatchingPeriod={30}
         getItemLayout={getItemLayout}
+        ItemSeparatorComponent={MySeparator}
+        contentContainerStyle={styles.list}
       />
     </View>
   );
@@ -40,15 +45,23 @@ export default ResultList;
 const styles = StyleSheet.create({
   itemsContainer: {
     borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 10,
-    backgroundColor: "lightgray",
+    borderRadius: horizontalScale(10),
+    backgroundColor: "#f8fafc",
     position: "absolute",
     top: 0,
     left: 0,
     right: 0,
-    borderColor: "gray",
-    maxHeight: 200,
+    borderColor: "#94a3b8",
+    maxHeight: verticalScale(400),
     zIndex: 2,
+  },
+  list: {
+    overflow: "hidden",
+    borderRadius: horizontalScale(10),
+  },
+  separator: {
+    height: 1,
+    backgroundColor: "#94a3b8",
+    marginHorizontal: horizontalScale(10),
   },
 });
