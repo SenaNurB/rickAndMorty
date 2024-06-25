@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, View } from "react-native";
 import React, { useCallback } from "react";
 import ResultItem from "./ResultItem";
 
-const ResultList = ({ data, isLoading }) => {
+const ResultList = ({ data }) => {
   const renderItem = useCallback(
     ({ item }) => {
       return <ResultItem item={item} />;
@@ -43,5 +43,12 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderRadius: 10,
     backgroundColor: "lightgray",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    borderColor: "gray",
+    maxHeight: 200,
+    zIndex: 2,
   },
 });

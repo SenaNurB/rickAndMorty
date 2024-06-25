@@ -8,9 +8,16 @@ import LoadingOverlay from "../ui/LoadingOverlay";
 
 const SearchBox = () => {
   const [searchText, setSearchText] = useState();
-  const { data, isLoading, error } = useCharacterQuery(searchText);
   const { selectedCharacters } = useCharacterStore();
   const [visible, setVisible] = useState(false);
+
+  const { data, isLoading, error } = useCharacterQuery(searchText, {
+    onError: (err) => {
+      if (err.message === "No Character Found") {
+        setVisible(true);
+      }
+    },
+  });
 
   const onChangeTextHandler = useCallback((text) => {
     setVisible(true);
@@ -21,6 +28,24 @@ const SearchBox = () => {
     setVisible((prevState) => !prevState);
   }, []);
 
+  const renderContent = () => {
+    if (isLoading) {
+      return <LoadingOverlay />;
+    }
+
+    if (error) {
+      return (
+        <Text style={styles.errorText}>
+          {error.message === "No Character Found"
+            ? "No Character Found"
+            : "Error loading data"}
+        </Text>
+      );
+    }
+
+    return data?.length ? <ResultList data={data} /> : null;
+  };
+
   return (
     <View style={styles.container}>
       <SelectedItemsList
@@ -29,19 +54,7 @@ const SearchBox = () => {
         value={searchText}
         onPress={onPressHandler}
       />
-      {visible && (
-        <View style={styles.resultContainer}>
-          {isLoading ? (
-            <LoadingOverlay />
-          ) : error ? (
-            <Text style={styles.errorText}>Error loading data</Text>
-          ) : data?.length ? (
-            <ResultList data={data} />
-          ) : (
-            <Text style={styles.noCharacterText}>No Character Found</Text>
-          )}
-        </View>
-      )}
+      {visible && <View style={styles.resultContainer}>{renderContent()}</View>}
     </View>
   );
 };
@@ -50,9 +63,9 @@ export default SearchBox;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     marginHorizontal: 20,
     paddingBottom: 50,
+    zIndex: 1,
   },
   resultContainer: {
     flex: 1,

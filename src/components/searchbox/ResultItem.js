@@ -1,6 +1,8 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useMemo, useCallback } from "react";
 import { useCharacterStore } from "../../stores/characterStore";
+import IconButton from "../ui/IconButton";
+import { horizontalScale, verticalScale } from "../../constants/scaling";
 
 const ResultItem = ({ item }) => {
   const { selectedCharacters, addCharacter, removeCharacter } =
@@ -26,7 +28,16 @@ const ResultItem = ({ item }) => {
 
   return (
     <TouchableOpacity style={styles.itemContainer} onPress={handleSelect}>
-      <View style={[styles.checkbox, isSelected && styles.selectedCheckbox]} />
+      <View style={[styles.checkbox, isSelected && styles.selectedCheckbox]}>
+        {isSelected && (
+          <IconButton
+            name="checkmark-sharp"
+            size={24}
+            color="white"
+            onPress={handleSelect}
+          />
+        )}
+      </View>
       <Image style={styles.image} source={{ uri: item.image }} />
       <View>
         <Text>{item.name}</Text>
@@ -41,25 +52,30 @@ export default ResultItem;
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: "row",
-    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    borderRadius: horizontalScale(5),
     borderColor: "gray",
-    padding: 10,
+    padding: horizontalScale(10),
     alignItems: "center",
-    maxHeight: 100,
+    maxHeight: verticalScale(100),
   },
   checkbox: {
-    width: 20,
-    height: 20,
+    width: horizontalScale(30),
+    height: horizontalScale(30),
     backgroundColor: "white",
-    marginRight: 10,
+    marginRight: horizontalScale(10),
+    alignSelf: "center",
+    justifyContent: "center",
+    borderRadius: horizontalScale(4),
+    padding: horizontalScale(4),
   },
   selectedCheckbox: {
-    backgroundColor: "red",
+    backgroundColor: "blue",
   },
   image: {
-    width: 60,
-    height: 60,
-    borderRadius: 6,
-    marginRight: 10,
+    width: horizontalScale(60),
+    height: horizontalScale(60),
+    borderRadius: horizontalScale(6),
+    marginRight: horizontalScale(10),
   },
 });

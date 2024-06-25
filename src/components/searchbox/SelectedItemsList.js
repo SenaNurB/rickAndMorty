@@ -1,7 +1,8 @@
-import { Button, FlatList, StyleSheet, TextInput, View } from "react-native";
+import { FlatList, StyleSheet, TextInput, View } from "react-native";
 import React, { useCallback } from "react";
 import SelectedItem from "./SelectedItem";
 import { useCharacterStore } from "../../stores/characterStore";
+import IconButton from "../ui/IconButton";
 
 const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
   const { removeCharacter } = useCharacterStore();
@@ -22,13 +23,21 @@ const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
 
   const input = (
     <View
-      style={{ minHeight: 50, alignItems: "center", justifyContent: "center" }}
+      style={{
+        alignItems: "center",
+        justifyContent: "center",
+      }}
     >
       <TextInput
         placeholder="Search Character"
         value={value}
         onChangeText={onChangeText}
-        style={{ minWidth: 200 }}
+        style={{
+          minWidth: 200,
+          alignItems: "center",
+          justifyContent: "center",
+          marginVertical: 10,
+        }}
       />
     </View>
   );
@@ -42,7 +51,12 @@ const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
         renderItem={renderItem}
         ListFooterComponent={input}
       />
-      <Button title=">" onPress={onPress} />
+      <IconButton
+        name="chevron-down"
+        size={20}
+        color="lightgray"
+        onPress={onPress}
+      />
     </View>
   );
 };
@@ -53,7 +67,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     borderWidth: 1,
-    padding: 10,
+    padding: 5,
     borderRadius: 6,
     justifyContent: "center",
     alignItems: "center",

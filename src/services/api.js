@@ -10,7 +10,14 @@ export const fetchCharacters = async (name) => {
 
     return response.data.results;
   } catch (error) {
+    if (axios.isAxiosError(error)) {
+      if (error.response?.status === 404) {
+        throw new Error("No Character Found");
+      } else {
+        throw new Error("Failed to fetch characters");
+      }
+    }
     console.error("Error fetching characters:", error);
-    throw new Error("Failed to fetch characters");
+    throw error;
   }
 };
