@@ -4,6 +4,7 @@ import SelectedItem from "./SelectedItem";
 import { useCharacterStore } from "../../stores/characterStore";
 import IconButton from "../ui/IconButton";
 import { horizontalScale, verticalScale } from "../../constants/scaling";
+import Input from "../ui/Input";
 
 const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
   const { removeCharacter } = useCharacterStore();
@@ -22,26 +23,7 @@ const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
     [handleRemove]
   );
 
-  const input = (
-    <View
-      style={{
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <TextInput
-        placeholder="Search Character"
-        value={value}
-        onChangeText={onChangeText}
-        style={{
-          minWidth: 200,
-          alignItems: "center",
-          justifyContent: "center",
-          marginVertical: 10,
-        }}
-      />
-    </View>
-  );
+  const input = <Input value={value} onChangeText={onChangeText} />;
 
   return (
     <View style={styles.container}>

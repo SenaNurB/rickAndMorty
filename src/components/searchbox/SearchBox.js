@@ -1,4 +1,4 @@
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React, { useState, useCallback } from "react";
 import SelectedItemsList from "./SelectedItemsList";
 import ResultList from "./ResultList";
