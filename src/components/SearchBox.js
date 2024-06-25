@@ -2,25 +2,15 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import SelectedItemsList from "./SelectedItemsList";
 import ResultList from "./ResultList";
-import { fetchCharacters } from "../services/api";
+import { useCharacterQuery } from "../hooks/useCharacterQuery";
 
 const SearchBox = () => {
   const [selectedItems, setSelectedItems] = useState([]);
   const [searchText, setSearchText] = useState();
-  const [characters, setCharacters] = useState();
-
-  async function getCharacters(text) {
-    try {
-      const data = await fetchCharacters(text);
-      setCharacters(data);
-    } catch (error) {
-      setError(error.message);
-    }
-  }
+  const { data, isLoading, error } = useCharacterQuery(searchText);
 
   const onChangeTextHandler = (text) => {
     setSearchText(text);
-    getCharacters(text);
   };
 
   const handleSelect = (character) => {
@@ -43,7 +33,7 @@ const SearchBox = () => {
         <TextInput placeholder="Search" onChangeText={onChangeTextHandler} />
       </View>
       <View>
-        <ResultList data={characters} handleSelect={handleSelect} />
+        <ResultList data={data} handleSelect={handleSelect} />
       </View>
     </View>
   );
