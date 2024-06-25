@@ -3,33 +3,38 @@ import React, { useEffect, useState } from "react";
 import SelectedItemsList from "./SelectedItemsList";
 import ResultList from "./ResultList";
 import { useCharacterQuery } from "../hooks/useCharacterQuery";
+import { useCharacterStore } from "../stores/characterStore";
 
 const SearchBox = () => {
-  const [selectedItems, setSelectedItems] = useState([]);
   const [searchText, setSearchText] = useState();
   const { data, isLoading, error } = useCharacterQuery(searchText);
+  const { selectedCharacters, addCharacter, removeCharacter } =
+    useCharacterStore();
 
   const onChangeTextHandler = (text) => {
     setSearchText(text);
   };
 
   const handleSelect = (character) => {
-    const characterIdList = selectedItems.map((item) => item.id);
+    const characterIdList = selectedCharacters.map((item) => item.id);
     const filterID = characterIdList.includes(character.id);
 
     if (!filterID) {
-      setSelectedItems((prevState) => [...prevState, character]);
+      addCharacter(character);
     }
   };
 
   const handleRemove = (id) => {
-    setSelectedItems((prevState) => prevState.filter((item) => item.id !== id));
+    removeCharacter(id);
   };
 
   return (
     <View style={{ marginHorizontal: 20 }}>
       <View style={styles.container}>
-        <SelectedItemsList data={selectedItems} handleRemove={handleRemove} />
+        <SelectedItemsList
+          data={selectedCharacters}
+          handleRemove={handleRemove}
+        />
         <TextInput placeholder="Search" onChangeText={onChangeTextHandler} />
       </View>
       <View>
