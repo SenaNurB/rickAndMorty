@@ -1,11 +1,15 @@
-import { SafeAreaView } from "react-native";
+import React from "react";
+import { View } from "react-native";
 import SearchBox from "../components/searchbox/SearchBox";
+import { SafeAreaView as SafeAreaViewContext } from "react-native-safe-area-context";
 
 function HomeScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-white">
-      <SearchBox />
-    </SafeAreaView>
+    <SafeAreaViewContext className="flex-1 bg-white">
+      <View className="flex-1 bg-white">
+        <SearchBox />
+      </View>
+    </SafeAreaViewContext>
   );
 }
 
