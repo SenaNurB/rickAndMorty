@@ -1,32 +1,34 @@
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, View, ActivityIndicator } from "react-native";
 import React, { useCallback } from "react";
 import ResultItem from "./ResultItem";
-import { horizontalScale, verticalScale } from "../../constants/scaling";
+import { verticalScale } from "../../constants/scaling";
+import { Colors } from "../../constants/colors";
+import { useCharacterQuery } from "../../hooks/useCharacterQuery";
 
 const ResultList = ({ data, searchText }) => {
+  const { fetchNextPage, isFetchingNextPage } = useCharacterQuery(searchText);
+
   const renderItem = useCallback(
-    ({ item }) => {
-      return <ResultItem item={item} searchText={searchText} />;
-    },
-    [data]
+    ({ item }) => <ResultItem item={item} searchText={searchText} />,
+    [searchText]
   );
 
   const getItemLayout = useCallback(
     (data, index) => ({
-      length: 120,
-      offset: 120 * index,
+      length: verticalScale(60),
+      offset: verticalScale(60) * index,
       index,
     }),
     []
   );
 
-  const MySeparator = () => <View style={styles.separator} />;
+  const MySeparator = () => <View className="border-b border-gray400 mx-2" />;
 
   return (
-    <View style={styles.itemsContainer}>
+    <View className="absolute border rounded-[10px] border-gray400 inset-x-0 top-0 bg-white400 max-h-96 z-20">
       <FlatList
         data={data}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         initialNumToRender={10}
         windowSize={21}
@@ -34,34 +36,16 @@ const ResultList = ({ data, searchText }) => {
         updateCellsBatchingPeriod={30}
         getItemLayout={getItemLayout}
         ItemSeparatorComponent={MySeparator}
-        contentContainerStyle={styles.list}
+        onEndReached={fetchNextPage}
+        onEndReachedThreshold={0.5}
+        ListFooterComponent={
+          isFetchingNextPage && (
+            <ActivityIndicator size="small" color={Colors.gray400} />
+          )
+        }
       />
     </View>
   );
 };
 
 export default ResultList;
-
-const styles = StyleSheet.create({
-  itemsContainer: {
-    borderWidth: 1,
-    borderRadius: horizontalScale(10),
-    backgroundColor: "#f8fafc",
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    borderColor: "#94a3b8",
-    maxHeight: verticalScale(400),
-    zIndex: 2,
-  },
-  list: {
-    overflow: "hidden",
-    borderRadius: horizontalScale(10),
-  },
-  separator: {
-    height: 1,
-    backgroundColor: "#94a3b8",
-    marginHorizontal: horizontalScale(10),
-  },
-});

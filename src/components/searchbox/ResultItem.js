@@ -1,11 +1,10 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import React, { useMemo, useCallback } from "react";
 import { useCharacterStore } from "../../stores/characterStore";
-import IconButton from "../ui/IconButton";
-import { horizontalScale, scaleFontSize } from "../../constants/scaling";
+import { horizontalScale } from "../../constants/scaling";
 import Checkbox from "../ui/Checkbox";
 
-const ResultItem = ({ item, searchText }) => {
+const ResultItem = React.memo(({ item, searchText }) => {
   const { selectedCharacters, addCharacter, removeCharacter } =
     useCharacterStore();
 
@@ -28,57 +27,38 @@ const ResultItem = ({ item, searchText }) => {
   }, [isSelected, addCharacter, removeCharacter, item]);
 
   return (
-    <TouchableOpacity style={styles.itemContainer} onPress={handleSelect}>
+    <TouchableOpacity
+      className="flex-row rounded-[10px] p-[10px] items-center"
+      onPress={handleSelect}
+    >
       <Checkbox isSelected={isSelected} handleSelect={handleSelect} />
-      <Image style={styles.image} source={{ uri: item.image }} />
-      <View>
-        <Text style={styles.title}>
+      <Image
+        className="rounded-[10px] mr-2"
+        source={{ uri: item.image }}
+        style={{ height: horizontalScale(40), width: horizontalScale(40) }}
+      />
+      <View className="flex-1">
+        <Text className="text-base text-gray500 font-medium">
           {item.name
             .split(new RegExp(`(${searchText})`, "i"))
             .map((part, index) => (
               <Text
                 key={index}
-                style={
-                  part.toLowerCase() === searchText.toLowerCase()
-                    ? [styles.boldText]
-                    : ""
+                className={
+                  part.toLowerCase() === searchText.toLowerCase() &&
+                  "font-black"
                 }
               >
                 {part}
               </Text>
             ))}
         </Text>
-        <Text style={styles.text}>{item.episode.length} Episodes</Text>
+        <Text className="text-gray500 text-sm">
+          {item.episode.length} Episodes
+        </Text>
       </View>
     </TouchableOpacity>
   );
-};
+});
 
 export default ResultItem;
-
-const styles = StyleSheet.create({
-  itemContainer: {
-    flexDirection: "row",
-    borderRadius: horizontalScale(10),
-    padding: horizontalScale(10),
-    alignItems: "center",
-  },
-  image: {
-    width: horizontalScale(40),
-    height: horizontalScale(40),
-    borderRadius: horizontalScale(6),
-    marginRight: horizontalScale(10),
-  },
-  text: {
-    color: "#4b596c",
-  },
-  title: {
-    fontSize: scaleFontSize(16),
-    fontWeight: "500",
-    color: "#4b596c",
-  },
-  boldText: {
-    fontWeight: "bold",
-    fontWeight: "900",
-  },
-});
