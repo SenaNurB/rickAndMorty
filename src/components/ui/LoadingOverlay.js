@@ -1,24 +1,12 @@
-import { View, ActivityIndicator, StyleSheet } from "react-native";
-import { horizontalScale, verticalScale } from "../../constants/scaling";
+import { View, ActivityIndicator } from "react-native";
+import { Colors } from "../../constants/colors";
 
 function LoadingOverlay() {
   return (
-    <View style={styles.container}>
-      <ActivityIndicator size="large" color="#94a3b8" />
+    <View className="flex-1 justify-center items-center bg-white400 border border-gray400 max-h-52 rounded-[10px]">
+      <ActivityIndicator size="large" color={Colors.gray400} />
     </View>
   );
 }
 
 export default LoadingOverlay;
-
-const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
-    height: verticalScale(100),
-    backgroundColor: "#f8fafc",
-    borderWidth: 1,
-    borderRadius: horizontalScale(10),
-    borderColor: "#94a3b8",
-  },
-});

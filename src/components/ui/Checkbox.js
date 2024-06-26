@@ -1,15 +1,26 @@
 import { StyleSheet, View } from "react-native";
 import { horizontalScale } from "../../constants/scaling";
 import IconButton from "./IconButton";
+import { Colors } from "../../constants/colors";
 
 const Checkbox = ({ isSelected, handleSelect }) => {
+  const variantStyles = {
+    default:
+      "bg-white mr-2.5 w-[24px] h-[24px] items-center justify-center rounded p-0.5 border border-gray-800",
+    selected: "border-accent500 bg-accent500",
+  };
+
   return (
-    <View style={[styles.checkbox, isSelected && styles.selectedCheckbox]}>
+    <View
+      className={`${variantStyles.default} ${
+        isSelected && variantStyles.selected
+      }`}
+    >
       {isSelected && (
         <IconButton
           name="checkmark-sharp"
           size={horizontalScale(15)}
-          color="white"
+          color={Colors.white}
           onPress={handleSelect}
         />
       )}
@@ -18,22 +29,3 @@ const Checkbox = ({ isSelected, handleSelect }) => {
 };
 
 export default Checkbox;
-
-const styles = StyleSheet.create({
-  checkbox: {
-    width: horizontalScale(20),
-    height: horizontalScale(20),
-    backgroundColor: "white",
-    marginRight: horizontalScale(10),
-    alignSelf: "center",
-    justifyContent: "center",
-    borderRadius: horizontalScale(4),
-    padding: horizontalScale(2),
-    borderWidth: 1,
-    borderColor: "#797979",
-  },
-  selectedCheckbox: {
-    backgroundColor: "#0075ff",
-    borderColor: "#0075ff",
-  },
-});

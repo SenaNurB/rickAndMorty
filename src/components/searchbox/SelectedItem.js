@@ -1,20 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import IconButton from "../ui/IconButton";
-import { horizontalScale, scaleFontSize } from "../../constants/scaling";
+import { horizontalScale } from "../../constants/scaling";
+import { Colors } from "../../constants/colors";
 
 const SelectedItem = ({ data, handleRemove }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{data.name}</Text>
+    <View className="flex-row p-2 mr-1 bg-white500 rounded-[10px] items-center justify-center">
+      <Text className="text-gray700 text-base">{data.name}</Text>
       <IconButton
         name="close"
-        size={20}
-        color="white"
-        style={{
-          backgroundColor: "#94a3b8",
-          borderRadius: 4,
-          marginLeft: 3,
-        }}
+        size={horizontalScale(20)}
+        color={Colors.white}
+        style="bg-gray400 rounded-md ml-1"
         onPress={() => handleRemove(data.id)}
       />
     </View>
@@ -22,19 +19,3 @@ const SelectedItem = ({ data, handleRemove }) => {
 };
 
 export default SelectedItem;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    padding: horizontalScale(5),
-    marginRight: horizontalScale(5),
-    borderRadius: horizontalScale(6),
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#e2e8f0",
-  },
-  text: {
-    color: "#334155",
-    fontSize: scaleFontSize(16),
-  },
-});

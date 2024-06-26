@@ -1,10 +1,11 @@
-import { FlatList, StyleSheet, TextInput, View } from "react-native";
+import { FlatList, View } from "react-native";
 import React, { useCallback } from "react";
 import SelectedItem from "./SelectedItem";
 import { useCharacterStore } from "../../stores/characterStore";
 import IconButton from "../ui/IconButton";
-import { horizontalScale, verticalScale } from "../../constants/scaling";
+import { horizontalScale } from "../../constants/scaling";
 import Input from "../ui/Input";
+import { Colors } from "../../constants/colors";
 
 const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
   const { removeCharacter } = useCharacterStore();
@@ -26,7 +27,7 @@ const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
   const input = <Input value={value} onChangeText={onChangeText} />;
 
   return (
-    <View style={styles.container}>
+    <View className="flex-row border bg-white border-gray300 rounded-[10px] p-2 items-center justify-center mb-2 shadow-sm shadow-black/40">
       <FlatList
         data={data}
         horizontal
@@ -37,8 +38,8 @@ const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
       />
       <IconButton
         name="caret-down-outline"
-        size={20}
-        color="#475569"
+        size={horizontalScale(20)}
+        color={Colors.gray600}
         onPress={onPress}
       />
     </View>
@@ -46,26 +47,3 @@ const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {
 };
 
 export default SelectedItemsList;
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: "row",
-    borderWidth: 1,
-    borderColor: "#9aa8bc",
-    padding: horizontalScale(5),
-    borderRadius: horizontalScale(10),
-    justifyContent: "center",
-    alignItems: "center",
-    marginBottom: verticalScale(5),
-    backgroundColor: "white",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
-  },
-});

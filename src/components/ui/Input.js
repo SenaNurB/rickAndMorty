@@ -1,5 +1,4 @@
-import { StyleSheet, TextInput } from "react-native";
-import { horizontalScale, verticalScale } from "../../constants/scaling";
+import { TextInput } from "react-native";
 
 const Input = ({ value, onChangeText }) => {
   return (
@@ -7,18 +6,9 @@ const Input = ({ value, onChangeText }) => {
       placeholder="Search Character"
       value={value}
       onChangeText={onChangeText}
-      style={styles.input}
+      className="min-w-[200px] items-center justify-center my-3"
     />
   );
 };
 
 export default Input;
-
-const styles = StyleSheet.create({
-  input: {
-    minWidth: horizontalScale(200),
-    alignItems: "center",
-    justifyContent: "center",
-    marginVertical: verticalScale(5),
-  },
-});

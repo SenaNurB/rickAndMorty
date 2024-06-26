@@ -1,33 +1,11 @@
-import { StyleSheet, Text, View } from "react-native";
-import {
-  horizontalScale,
-  scaleFontSize,
-  verticalScale,
-} from "../../constants/scaling";
+import { Text, View } from "react-native";
 
 const ErrorOverlay = ({ message }) => {
   return (
-    <View style={styles.container}>
-      <Text style={styles.text}>{message}</Text>
+    <View className="flex-1 justify-center items-center bg-white400 border border-gray400 max-h-52 rounded-[10px]">
+      <Text className="text-gray500 font-bold text-base">{message}</Text>
     </View>
   );
 };
 
 export default ErrorOverlay;
-
-const styles = StyleSheet.create({
-  container: {
-    height: verticalScale(100),
-    backgroundColor: "#f8fafc",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 1,
-    borderRadius: horizontalScale(10),
-    borderColor: "#94a3b8",
-  },
-  text: {
-    color: "#4b596c",
-    fontWeight: "bold",
-    fontSize: scaleFontSize(15),
-  },
-});

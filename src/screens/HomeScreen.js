@@ -3,7 +3,7 @@ import SearchBox from "../components/searchbox/SearchBox";
 
 function HomeScreen() {
   return (
-    <SafeAreaView className="flex-1 bg-black">
+    <SafeAreaView className="flex-1 bg-white">
       <SearchBox />
     </SafeAreaView>
   );
