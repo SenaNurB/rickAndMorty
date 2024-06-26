@@ -1,10 +1,12 @@
 import { FlatList, View } from "react-native";
 import React, { useCallback } from "react";
-import SelectedItem from "./SelectedItem";
 import { useCharacterStore } from "../../stores/characterStore";
+
+import SelectedItem from "./SelectedItem";
 import IconButton from "../ui/IconButton";
-import { horizontalScale } from "../../constants/scaling";
 import Input from "../ui/Input";
+
+import { horizontalScale } from "../../constants/scaling";
 import { Colors } from "../../constants/colors";
 
 const SelectedItemsList = ({ data, onChangeText, value, onPress }) => {

@@ -1,9 +1,10 @@
 import { FlatList, View, ActivityIndicator } from "react-native";
 import React, { useCallback } from "react";
+import { useCharacterQuery } from "../../hooks/useCharacterQuery";
+
 import ResultItem from "./ResultItem";
 import { verticalScale } from "../../constants/scaling";
 import { Colors } from "../../constants/colors";
-import { useCharacterQuery } from "../../hooks/useCharacterQuery";
 
 const ResultList = ({ data, searchText }) => {
   const { fetchNextPage, isFetchingNextPage } = useCharacterQuery(searchText);

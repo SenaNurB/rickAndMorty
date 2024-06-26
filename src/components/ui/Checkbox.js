@@ -1,6 +1,7 @@
-import { StyleSheet, View } from "react-native";
-import { horizontalScale } from "../../constants/scaling";
+import { View } from "react-native";
 import IconButton from "./IconButton";
+
+import { horizontalScale } from "../../constants/scaling";
 import { Colors } from "../../constants/colors";
 
 const Checkbox = ({ isSelected, handleSelect }) => {

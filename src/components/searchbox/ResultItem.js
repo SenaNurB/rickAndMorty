@@ -1,8 +1,9 @@
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import React, { useMemo, useCallback } from "react";
 import { useCharacterStore } from "../../stores/characterStore";
-import { horizontalScale } from "../../constants/scaling";
+
 import Checkbox from "../ui/Checkbox";
+import { horizontalScale } from "../../constants/scaling";
 
 const ResultItem = React.memo(({ item, searchText }) => {
   const { selectedCharacters, addCharacter, removeCharacter } =

@@ -1,9 +1,10 @@
 import { View } from "react-native";
 import React, { useState, useCallback } from "react";
-import SelectedItemsList from "./SelectedItemsList";
-import ResultList from "./ResultList";
 import { useCharacterQuery } from "../../hooks/useCharacterQuery";
 import { useCharacterStore } from "../../stores/characterStore";
+
+import SelectedItemsList from "./SelectedItemsList";
+import ResultList from "./ResultList";
 import LoadingOverlay from "../ui/LoadingOverlay";
 import ErrorOverlay from "../ui/ErrorOverlay";
 
